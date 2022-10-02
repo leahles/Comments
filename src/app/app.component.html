@@ -1,0 +1,10 @@
+<nav mat-tab-nav-bar>
+    <a  mat-tab-link (click)="activeLink = 'users'" [active]="activeLink == 'users'"
+        routerLink="/users">
+        Users
+    </a>
+    <a mat-tab-link (click)="activeLink = 'comments'" [active]="activeLink == 'comments'" routerLink="/comments">
+        Comments
+    </a>
+</nav>
+<router-outlet></router-outlet>

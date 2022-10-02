@@ -1,0 +1,38 @@
+<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="scroll">
+<ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: comments }"></ng-container>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #recursiveListTmpl let-list="list">
+    <div *ngFor="let item of list">
+        <div class="comment">
+            <div class="comment-txt" (click)="item.addYourComment = !item.addYourComment">
+                <img [src]="item.owneDetails.imag" height="50" width="50" /> 
+                {{ item.txt }}
+                <span>{{item.createdAt | dateCreated }}</span>
+                <div *ngIf="item.ownerId == currentUser.id">
+                    <button mat-raised-button color="primary" (click)="editComment(item)">EDIT COMMENT</button>
+                    <button mat-raised-button color="primary" (click)="deletComment(item)">DELET COMMENT</button>
+                </div>
+            </div>
+            <form *ngIf="item.addYourComment" class="new-comment">
+                <img [src]="currentUser.imag" height="80" width="80">
+                <input name="comment" class="add-massage" placeholder="pleas add your comment here..."
+                    [(ngModel)]="newCommentTxt" />
+                <button mat-raised-button color="primary" class="submit" [disabled]="!newCommentTxt"
+                    (click)="addComment(item.id);item.addYourComment = false">Submit</button>
+            </form>
+        </div>
+        <ul *ngIf="item.commentsArr.length > 0">
+            <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.commentsArr }"></ng-container>
+        </ul>
+    </div>
+</ng-template>
+
+
+<form  class="new-comment">
+    <img [src]="currentUser.imag" height="80" width="80">
+    <input name="comment" class="add-massage" placeholder="pleas add your comment here..."
+        [(ngModel)]="newCommentTxt" />
+    <button class="submit" mat-raised-button color="primary" class="submit" [disabled]="!newCommentTxt"
+        (click)="addComment()">Submit</button>
+</form>

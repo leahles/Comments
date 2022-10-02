@@ -1,0 +1,8 @@
+<h3>Edit Comment</h3>
+<mat-form-field class="edit" appearance="fill">
+    <mat-label>edit</mat-label>
+    <input matInput type="text" [(ngModel)]="commentValue">
+</mat-form-field>
+<mat-dialog-actions align="end">
+    <button [disabled]="!commentValue" mat-button [mat-dialog-close] ="commentValue">save</button>
+  </mat-dialog-actions>
